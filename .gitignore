@@ -1,0 +1,30 @@
+# .NET
+bin/
+obj/
+*.user
+*.suo
+*.cache
+*.DotSettings.user
+
+# Node
+node_modules/
+dist/
+
+# Angular
+.angular/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+appsettings.Development.json
+
+# Project internal
+MEMORY/
+Plans/
