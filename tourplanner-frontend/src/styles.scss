@@ -1,0 +1,62 @@
+@use "tailwindcss";
+@import "@flaticon/flaticon-uicons/css/regular/rounded.css";
+
+@theme {
+  --color-primary: #2563eb;
+  --color-primary-light: #3b82f6;
+  --color-primary-dark: #1d4ed8;
+  --color-accent: #06b6d4;
+  --color-accent-light: #67e8f9;
+  --color-accent-dark: #0891b2;
+  --color-surface: #f8fafc;
+  --color-surface-dark: #e2e8f0;
+  --color-danger: #ef4444;
+  --color-danger-dark: #dc2626;
+  --color-info: #60a5fa;
+  --color-info-light: #dbeafe;
+  --color-muted: #64748b;
+  --color-muted-light: #94a3b8;
+  --color-ink: #0f172a;
+  --color-ink-light: #475569;
+
+  --font-display: "Inter", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Inter", "Segoe UI", system-ui, sans-serif;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--color-ink);
+  background: var(--color-surface);
+  -webkit-font-smoothing: antialiased;
+}
+
+.input-field {
+  @apply w-full px-3 py-2.5 border border-surface-dark rounded-lg text-sm transition-all duration-200 bg-white;
+  &:focus {
+    @apply outline-none border-primary ring-2 ring-primary/10;
+  }
+}
+
+.btn-cancel {
+  @apply px-5 py-2.5 bg-surface-dark text-ink-light text-sm font-medium rounded-lg transition-colors duration-200 cursor-pointer border-none;
+  &:hover {
+    @apply bg-muted-light/30;
+  }
+}
+
+.btn-submit {
+  @apply px-5 py-2.5 bg-primary text-white text-sm font-semibold rounded-lg transition-colors duration-200 cursor-pointer border-none shadow-sm;
+  &:hover {
+    @apply bg-primary-dark shadow-md;
+  }
+}
+
+.modal-overlay {
+  @apply fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-[1000];
+}
+
+.modal-content {
+  @apply bg-white rounded-2xl p-8 w-[560px] max-w-[90vw] max-h-[90vh] overflow-y-auto shadow-2xl;
+}
