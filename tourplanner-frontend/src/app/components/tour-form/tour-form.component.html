@@ -1,0 +1,54 @@
+<div class="modal-overlay" (click)="cancel.emit()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <h2 class="m-0 mb-6 text-xl font-display text-primary">{{ tour() ? 'Edit Tour' : 'New Tour' }}</h2>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      
+      <div class="mb-5">
+        <label for="name" class="block text-sm font-semibold text-ink-light mb-1.5">Name *</label>
+        <input id="name" formControlName="name" type="text" class="input-field">
+        @if (hasError('name', 'required')) {
+          <span class="text-xs text-danger mt-1 block">Name is required</span>
+        }
+        @if (hasError('name', 'minlength')) {
+          <span class="text-xs text-danger mt-1 block">Name must be at least 3 characters</span>
+        }
+      </div>
+      <div class="mb-5">
+        <label for="description" class="block text-sm font-semibold text-ink-light mb-1.5">Description</label>
+        <textarea id="description" formControlName="description" rows="3" class="input-field resize-y"></textarea>
+      </div>
+      <div class="grid grid-cols-2 gap-4 mb-5">
+        <div>
+          <label for="from" class="block text-sm font-semibold text-ink-light mb-1.5">From *</label>
+          <input id="from" formControlName="from" type="text" class="input-field">
+          @if (hasError('from', 'required')) {
+            <span class="text-xs text-danger mt-1 block">From is required</span>
+          }
+        </div>
+        <div>
+          <label for="to" class="block text-sm font-semibold text-ink-light mb-1.5">To *</label>
+          <input id="to" formControlName="to" type="text" class="input-field">
+          @if (hasError('to', 'required')) {
+            <span class="text-xs text-danger mt-1 block">To is required</span>
+          }
+        </div>
+      </div>
+      <div class="mb-5">
+        <label for="transportType" class="block text-sm font-semibold text-ink-light mb-1.5">Transport Type *</label>
+        <select id="transportType" formControlName="transportType" class="input-field cursor-pointer">
+          <option value="" disabled>Select type</option>
+          @for (type of transportTypes; track type) {
+            <option [value]="type">{{ type }}</option>
+          }
+        </select>
+        @if (hasError('transportType', 'required')) {
+          <span class="text-xs text-danger mt-1 block">Transport type is required</span>
+        }
+      </div>
+      <div class="flex justify-end gap-3">
+        <button type="button" class="btn-cancel" (click)="cancel.emit()">Cancel</button>
+        <button type="submit" class="btn-submit">{{ tour() ? 'Update Tour' : 'Create Tour' }}</button>
+      </div>
+    </form>
+  </div>
+</div>

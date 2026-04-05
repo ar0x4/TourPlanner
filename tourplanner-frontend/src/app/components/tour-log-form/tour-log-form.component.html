@@ -1,0 +1,85 @@
+<div class="modal-overlay" (click)="cancel.emit()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <h2 class="m-0 mb-6 text-xl font-display text-primary">{{ log() ? 'Edit Log' : 'New Log Entry' }}</h2>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      
+      <div class="mb-5">
+        <label for="dateTime" class="block text-sm font-semibold text-ink-light mb-1.5">Date & Time *</label>
+        <input id="dateTime" formControlName="dateTime" type="datetime-local" class="input-field">
+        @if (hasError('dateTime', 'required')) {
+          <span class="text-xs text-danger mt-1 block">Date/time is required</span>
+        }
+      </div>
+      <div class="mb-5">
+        <label class="block text-sm font-semibold text-ink-light mb-2">Rating *</label>
+        <div class="flex gap-1" role="group" aria-label="Rating selection">
+          @for (star of levels; track star) {
+            <button type="button"
+              class="p-0 border-none bg-transparent cursor-pointer transition-transform duration-150 hover:scale-125"
+              [attr.aria-label]="star + ' star' + (star > 1 ? 's' : '')"
+              (click)="setRating(star)">
+              <svg class="w-8 h-8" viewBox="0 0 20 20" [attr.fill]="star <= (form.get('rating')?.value || 0) ? '#3b82f6' : '#e5e7eb'">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+              </svg>
+            </button>
+          }
+        </div>
+        @if (hasError('rating', 'required')) {
+          <span class="text-xs text-danger mt-1 block">Rating is required</span>
+        }
+      </div>
+      <div class="mb-5">
+        <label class="block text-sm font-semibold text-ink-light mb-2">Difficulty *</label>
+        <div class="flex gap-2 items-center" role="group" aria-label="Difficulty selection">
+          @for (level of levels; track level) {
+            <button type="button"
+              class="w-8 h-8 rounded-full border-2 transition-all duration-200 cursor-pointer flex items-center justify-center text-xs font-bold"
+              [attr.aria-label]="'Difficulty ' + level"
+              [class]="level <= (form.get('difficulty')?.value || 0)
+                ? 'bg-danger border-danger text-white scale-110'
+                : 'bg-transparent border-surface-dark text-muted-light hover:border-danger/50'"
+              (click)="setDifficulty(level)">
+              {{ level }}
+            </button>
+          }
+          <span class="text-xs text-muted-light ml-2">
+            @switch (form.get('difficulty')?.value) {
+              @case (1) { Easy }
+              @case (2) { Moderate }
+              @case (3) { Challenging }
+              @case (4) { Hard }
+              @case (5) { Extreme }
+            }
+          </span>
+        </div>
+        @if (hasError('difficulty', 'required')) {
+          <span class="text-xs text-danger mt-1 block">Difficulty is required</span>
+        }
+      </div>
+      <div class="grid grid-cols-2 gap-4 mb-5">
+        <div>
+          <label for="totalDistance" class="block text-sm font-semibold text-ink-light mb-1.5">Distance (km) *</label>
+          <input id="totalDistance" formControlName="totalDistance" type="number" min="0" step="0.1" class="input-field">
+          @if (hasError('totalDistance', 'required')) {
+            <span class="text-xs text-danger mt-1 block">Required</span>
+          }
+        </div>
+        <div>
+          <label for="totalTime" class="block text-sm font-semibold text-ink-light mb-1.5">Total Time (HH:MM:SS) *</label>
+          <input id="totalTime" formControlName="totalTime" type="text" placeholder="00:00:00" class="input-field">
+          @if (hasError('totalTime', 'required')) {
+            <span class="text-xs text-danger mt-1 block">Required</span>
+          }
+        </div>
+      </div>
+      <div class="mb-6">
+        <label for="comment" class="block text-sm font-semibold text-ink-light mb-1.5">Comment</label>
+        <textarea id="comment" formControlName="comment" rows="3" class="input-field resize-y"></textarea>
+      </div>
+      <div class="flex justify-end gap-3">
+        <button type="button" class="btn-cancel" (click)="cancel.emit()">Cancel</button>
+        <button type="submit" class="btn-submit">{{ log() ? 'Update Log' : 'Create Log' }}</button>
+      </div>
+    </form>
+  </div>
+</div>
